@@ -72,6 +72,23 @@ PAGINA DE AYUDA:
 
 		-> DESCARGAR IMAGENES
 			docker pull mongo
+			
+		-> EJECUTAR
+			docker run                                                                   docker run -d -p 27018:27017 --name mydatabase -v  mongo
+				-d en background
+				-p 27018:27017 puertos
+				-- name NombreContenedor
+				-v rutaLocal rutaDatosContenedor
+				
+		-> PARAR 
+			docker stop [id] [nombre]
+		
+		-> LIMPIAR HISTORIAL DE DOCKER
+			docker rm $(docker ps -aq)
+
+		-> ACCEDER A UN CONTENEDOR
+			docker exec -it exampleapp bash
+				
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////// DOCKERFILE //////////////////////////////////////////////////////////////////////////////////////////////////////////
 # Vamos a instalar una version de node
@@ -158,9 +175,6 @@ services:
 			
 		-> VER CONTENEDORES LEVANTADOS
 			docker ps
-			
-		-> ACCEDER A UN CONTENEDOR
-			docker exec -it exampleapp bash
 			
 		-> PARAR IMAGEN
 			docker-compose stop
