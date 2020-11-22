@@ -1,0 +1,83 @@
+Instalar Minikube
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Descagamos e instalamos
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 \
+  && chmod +x minikube
+# Arrancamos minikube
+./minikube start
+
+
+Instalar kubectl, el cliente de Kubernetes
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Descargamos
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
+ 
+# Le damos permisos de ejecución
+chmod 777 ./kubectl
+ 
+# Lo copiamos en la carpeta /usr/local/bin para que esté disponible
+sudo mv ./kubectl /usr/local/bin/kubectl
+# Si todo ha ido bien, deberíamos poder ejecutar esto y que nos devolviera información de la versión
+kubectl version
+
+Dashboard de Kubernetes
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+./minikube dashboard
+
+
+Ver estado del cluster
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Ver el listado de nodos de nuestro cluster
+kubectl get nodes
+	
+kubectl describe nodes
+
+Despliegue de aplicaciones
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+kubectl create deployment hello-http –image=httpd:latest
+
+kubectl get pods
+
+kubectl describe pod hello-http
+
+# Desplegamos el conjunto de contenedores descritos en el fichero app.yml
+kubectl apply -f app.yml
+
+FICHERO APP
+---
+apiVersion: v1
+ 
+kind: Pod
+ 
+metadata:
+  name: mi-app
+  labels:
+    app: web
+ 
+spec:
+  containers:
+    - name: front-end
+      image: nginx
+      ports:
+        - containerPort: 80
+ 
+    - name: back-end
+      image: redis
+	  
+Exponer servicios
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+kubectl expose deployment mongo --type=LoadBalancer --port=27017
+
+Eliminar pods/despliegues
+--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+# Eliminamos el despliegue de la imagen httpd:latest
+kubectl delete deployment hello-http
+ 
+# Eliminamos el despliegue hecho con el fichero app.yml
+kubectl delete -f app.yml
+ 
+# Eliminamos el servicio expuesto hello.http
+kubectl delete service hello-http
+ 
+# Eliminamos el minikube
+minikube delete
