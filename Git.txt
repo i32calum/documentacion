@@ -1,0 +1,391 @@
+Comandos GIT
+--------------------------------------------------------------------------------
+
+* Instalacion:
+
+			# apt-get install git
+
+* Para configurar el usuario:
+
+			git config --global user.name "miguel.cachinero"
+			git config --global user.email "miguel.cachinero.luna@gmail.com"
+
+* Para ver estas configuraciones:
+
+			git config --list
+
+* Vamos a crear una carpeta donde guardaremos nuestras apps: con git:
+
+			git init Apps
+
+* Dentro de esta carpeta vamos a crear una carpeta donde crearemos una app de pruebas para git "app-practicas-git", vamos añadirla a git:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git status
+			En la rama master
+
+			No hay commits todavía
+
+			Archivos sin seguimiento:
+			  (usa "git add <archivo>..." para incluirlo a lo que se será confirmado)
+				app-practicas-git/
+
+			no hay nada agregado al commit pero hay archivos sin seguimiento presentes (usa "git add" para hacerles seguimiento)
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git add app-practicas-git/                 --> Añadimos la carpeta para las practicas de git al repositorio
+
+* Al hacer de nuevo git status vemos como ya se muestran los archivos del proyecto:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git status
+			En la rama master
+
+			No hay commits todavía
+
+			Cambios a ser confirmados:
+			  (usa "git rm --cached <archivo>..." para sacar del área de stage)
+				nuevo archivo:  app-practicas-git/src/app.js
+				nuevo archivo:  app-practicas-git/src/index.html
+
+
+*  Vamos a crear un nuevo archivo llamado style.css y vamos a probar de nuevo el comando git status
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git status
+			En la rama master
+
+			No hay commits todavía
+
+			Cambios a ser confirmados:
+			  (usa "git rm --cached <archivo>..." para sacar del área de stage)
+				nuevo archivo:  app-practicas-git/src/app.js
+				nuevo archivo:  app-practicas-git/src/index.html
+
+			Archivos sin seguimiento:
+			  (usa "git add <archivo>..." para incluirlo a lo que se será confirmado)
+				app-practicas-git/src/style.css
+
+
+*  Añadimos con git add el archivo sin seguimiento style.css
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git$ git add src/style.css 
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git$ git status
+			En la rama master
+
+			No hay commits todavía
+
+			Cambios a ser confirmados:
+			  (usa "git rm --cached <archivo>..." para sacar del área de stage)
+				nuevo archivo:  src/app.js
+				nuevo archivo:  src/index.html
+				nuevo archivo:  src/style.css
+
+
+*  Vamos a crear nuestro primer SNAPSHOT
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git$ git commit.
+			
+* Aparece una ventana donde añadiremos un comentario al commit:
+
+			# creacion de proyecto app-git-practicas  
+			# Por favor ingresa el mensaje del commit para tus cambios. Las
+			#  líneas que comiencen con '#' serán ignoradas, y un mensaje
+			#  vacío aborta el commit.
+			#
+			# En la rama master
+			#
+			# Confirmación inicial
+			#
+			# Cambios a ser confirmados:
+			#       nuevo archivo:  src/app.js
+			#       nuevo archivo:  src/index.html
+			#       nuevo archivo:  src/style.css
+			#
+			
+			Control + O para guardar
+			
+			Despues Esc y wq para guardar
+
+
+* Vemos como se ha hecho el commit y despues ejecutamos otra vez para ver si hay algo por hacer:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git$ git commit
+			[master (commit-raíz) 8db219a] creacion de proyecto app-git-practicas
+			 3 files changed, 1 insertion(+)
+			 create mode 100644 app-practicas-git/src/app.js
+			 create mode 100644 app-practicas-git/src/index.html
+			 create mode 100644 app-practicas-git/src/style.css
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git$ git commit
+			En la rama master
+			nada para hacer commit, el árbol de trabajo está limpio
+
+* Vamos a ver los commits realizados con git log:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git$ git log
+			commit 8db219aad4eca6df1260e6509c7fb83fbd486a67 (HEAD -> master)
+			Author: miguel.cachinero <miguel.cachinero.luna@gmail.com>
+			Date:   Fri Nov 20 10:06:19 2020 +0100
+
+				creacion de proyecto app-git-practicas
+				
+* Modificamos el fichero index.hmtl y volvemos a hacer status:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git$ git status
+			En la rama master
+			Cambios no rastreados para el commit:
+			  (usa "git add <archivo>..." para actualizar lo que será confirmado)
+			  (usa "git restore <archivo>..." para descartar los cambios en el directorio de trabajo)
+				modificado:     src/index.html
+
+			sin cambios agregados al commit (usa "git add" y/o "git commit -a")
+
+* Vamos a dejar el archivo index con la versión anterior a esta modificacion y al hacer status ya no aparecerán nuestros cambios:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git$ cd src
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ git checkout -- index.html
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ git status
+			En la rama master
+			nada para hacer commit, el árbol de trabajo está limpio
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ 
+			
+* Volvemos a realizar cambios en el index.html y vamos a ver las diferencias:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ git status
+			En la rama master
+			Cambios no rastreados para el commit:
+			  (usa "git add <archivo>..." para actualizar lo que será confirmado)
+			  (usa "git restore <archivo>..." para descartar los cambios en el directorio de trabajo)
+				modificado:     index.html
+
+			sin cambios agregados al commit (usa "git add" y/o "git commit -a")
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ git diff index.html
+			diff --git a/app-practicas-git/src/index.html b/app-practicas-git/src/index.html
+			index e69de29..d5f59ad 100644
+			--- a/app-practicas-git/src/index.html
+			+++ b/app-practicas-git/src/index.html
+			@@ -0,0 +1,11 @@
+			+<!DOCTYPE html>
+			+<html lang="en">
+			+<head>
+			+    <meta charset="UTF-8">
+			+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+			+    <title>primera pagina</title>
+			+</head>
+			+<body>
+			+    
+			+</body>
+			+</html>
+			\ No newline at end of file
+			
+* Añadimos los cambios:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ git add index.html
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ git status
+			En la rama master
+			Cambios a ser confirmados:
+			  (usa "git restore --staged <archivo>..." para sacar del área de stage)
+				modificado:     index.html
+
+* Y commiteamos los cambios:
+
+miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ git commit
+[master 22243a5] modificacion index.hmtl
+ 1 file changed, 11 insertions(+)
+ 
+* Vamos a añadir carpetas a ignorar, para ellos vamos a crear dentro de nuestro proyecto la carpeta test con un txt dentro:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ git status
+			En la rama master
+			Archivos sin seguimiento:
+			  (usa "git add <archivo>..." para incluirlo a lo que se será confirmado)
+				../test/
+				
+* Vamos a crear el archivo ".gitignore" con el siguiente contenido dentro de la carpeta Apps (sobre la que hicimos el git init):
+			test
+
+* Lanzamos git status y vemos como la carpeta /test/ desaparece de cambios salientes:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps/app-practicas-git/src$ git status
+			En la rama master
+			Archivos sin seguimiento:
+			  (usa "git add <archivo>..." para incluirlo a lo que se será confirmado)
+				../../.gitignore
+
+* Añadimos el .gitignore y vemos como sigue sin aparecer la carpeta /test/
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git add .gitignore
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git status
+			En la rama master
+			Cambios a ser confirmados:
+			  (usa "git restore --staged <archivo>..." para sacar del área de stage)
+				nuevo archivo:  .gitignore
+
+* Commiteamos el gitignore con comentario
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git commit -m "adicion de gitgnore"
+			[master 0098493] adicion de gitgnore
+			 1 file changed, 1 insertion(+)
+			 create mode 100644 .gitignore
+			 
+* Vamos a crear una rama para realizar cambios en el proyecto:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git branch login
+
+* Vamosa ver las versiones del codigo existentes:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git branch
+			  login
+			* master
+			
+* Nos movemos a la rama login:
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git checkout login
+			Cambiado a rama 'login'
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git branch
+			* login
+			  master
+			  
+			  
+* Creamos varias carpetas y archivos en el proyecto y hacemos git status
+
+			miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git status
+			En la rama login
+			Archivos sin seguimiento:
+			  (usa "git add <archivo>..." para incluirlo a lo que se será confirmado)
+				app-practicas-git/authentication/
+				app-practicas-git/index.js
+				app-practicas-git/login/
+
+* Añadmos los cambios
+
+				miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git add .
+				miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git status
+				En la rama login
+				Cambios a ser confirmados:
+				  (usa "git restore --staged <archivo>..." para sacar del área de stage)
+					nuevo archivo:  app-practicas-git/authentication/auth.js
+					nuevo archivo:  app-practicas-git/index.js
+					nuevo archivo:  app-practicas-git/login/login.js
+					
+* Hace el commit en la rama login y vemos el log:
+
+				miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git commit -m "version alternativa con login"
+				[login f623963] version alternativa con login
+				 3 files changed, 0 insertions(+), 0 deletions(-)
+				 create mode 100644 app-practicas-git/authentication/auth.js
+				 create mode 100644 app-practicas-git/index.js
+				 create mode 100644 app-practicas-git/login/login.js
+				miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git log
+				commit f623963df3ddceeeb1ef5042cddff790ca4a2019 (HEAD -> login)
+				Author: miguel.cachinero <miguel.cachinero.luna@gmail.com>
+				Date:   Fri Nov 20 11:15:25 2020 +0100
+
+					version alternativa con login
+
+* Nos movemos a la rama master, desapareciendo los archivos y carpetas que creamos en la rama login:
+
+miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git checkout master
+Cambiado a rama 'master'
+
+* Vamos a subir el código a Github por lo que nos registraremos y nos crearemos un nuevo repositorio:
+
+				https://github.com/i32calum/git-curso
+				
+* Añadimos el repositorio creados:
+
+				miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git remote add origin https://github.com/i32calum/git-curso.git
+
+* Subimos el código al repositorio:
+				
+				miguelete@miguelete-EasyNote-TS11HR:~/Apps$ git push -u origin master
+				Username for 'https://github.com': i32calum
+				Password for 'https://i32calum@github.com': 
+				Enumerando objetos: 14, listo.
+				Contando objetos: 100% (14/14), listo.
+				Compresión delta usando hasta 8 hilos
+				Comprimiendo objetos: 100% (7/7), listo.
+				Escribiendo objetos: 100% (14/14), 1.17 KiB | 599.00 KiB/s, listo.
+				Total 14 (delta 0), reusado 0 (delta 0)
+				To https://github.com/i32calum/git-curso.git
+				 * [new branch]      master -> master
+				Rama 'master' configurada para hacer seguimiento a la rama remota 'master' de 'origin'.
+
+				
+* El codigo aparece en github en nuestro repositorio			
+
+* Borramos la carpeta Apps
+
+* Vamos a descargar el proyecto a local otra vez desde GitHub
+
+				miguelete@miguelete-EasyNote-TS11HR:~$ git clone https://github.com/i32calum/git-curso.git
+				Clonando en 'git-curso'...
+				remote: Enumerating objects: 17, done.
+				remote: Counting objects: 100% (17/17), done.
+				remote: Compressing objects: 100% (9/9), done.
+				remote: Total 17 (delta 0), reused 14 (delta 0), pack-reused 0
+				Desempaquetando objetos: 100% (17/17), 1.87 KiB | 318.00 KiB/s, listo.
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++                          GITHUB                                   ++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+https://github.com/
+usuario: i32calum
+password: Ww4U5hDcvm3BmZy
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++                          COMANDOS                                   +++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+PAGINA DE AYUDA:
+		https://rogerdudler.github.io/git-guide/index.es.html
+
+		-> CONFIGURACION
+			git config --global user.name "miguel.cachinero"
+			git config --global user.email "miguel.cachinero.luna@gmail.com"
+			
+		-> AÑADIR PROYECTO A GIT
+			git init Apps
+			
+		-> SEGUIMIENTO DE FICHEROS EN GIT
+			git status
+			
+		-> AÑADIR CAMBIOS
+			git add index.html
+			
+		-> AÑADIR TODOS LOS CAMBIOS
+			git add .
+		
+		-> COMMIT
+			git commit
+			
+		-> COMMIT CON COMENTARIOS
+			git commit -m "COMENTARIO"
+			
+		-> LOG con commits realizdos
+			git log
+			
+		-> VOLVER A VERSION ANTERIOR
+			git checkout -- archivo
+			
+		-> VER DIFERENCIAS ENTRE VERSION ACTUAL Y ULTIMA
+			git diff index.html
+
+		-> VER LAS RAMAS
+			git branch
+			
+		-> CREAR BRANCH
+			git branch NOMBREBRANCH
+			
+		-> SWITCH A BRANCH
+			git checkout BRANCH
+			
+		-> AÑADIR REPOSITORIO REMOTO
+			git remote add origin https://github.com/i32calum/git-curso.git
+		
+		-> SUBIR CODIGO A REPOSITORIO REMOTO
+			git push -u origin master
+			
+		-> DESCARGAR PROYECTO DESDE GITHUB
+			git clone https://github.com/i32calum/git-curso.git

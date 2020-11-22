@@ -1,0 +1,163 @@
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++++                          LINUX                                   ++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+Abrir terminal													Control + Shift + T
+Añadir al grupo												sudo usermod -aG app usuario -> sudo usermod -aG docker miguelete
+Ver grupos de usuario									id -nG
+
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++                          GITHUB                                   +++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+https://github.com/
+usuario: i32calum
+password: Ww4U5hDcvm3BmZy
+
+PAGINA DE AYUDA:
+		https://rogerdudler.github.io/git-guide/index.es.html
+
+		-> CONFIGURACION
+			git config --global user.name "miguel.cachinero"
+			git config --global user.email "miguel.cachinero.luna@gmail.com"
+			
+		-> AÑADIR PROYECTO A GIT
+			git init Apps
+			
+		-> SEGUIMIENTO DE FICHEROS EN GIT
+			git status
+			
+		-> AÑADIR CAMBIOS
+			git add index.html
+			
+		-> AÑADIR TODOS LOS CAMBIOS
+			git add .
+		
+		-> COMMIT
+			git commit
+			
+		-> COMMIT CON COMENTARIOS
+			git commit -m "COMENTARIO"
+			
+		-> LOG con commits realizdos
+			git log
+			
+		-> VOLVER A VERSION ANTERIOR
+			git checkout -- archivo
+			
+		-> VER DIFERENCIAS ENTRE VERSION ACTUAL Y ULTIMA
+			git diff index.html
+
+		-> VER LAS RAMAS
+			git branch
+			
+		-> CREAR BRANCH
+			git branch NOMBREBRANCH
+			
+		-> SWITCH A BRANCH
+			git checkout BRANCH
+			
+		-> AÑADIR REPOSITORIO REMOTO
+			git remote add origin https://github.com/i32calum/git-curso.git
+		
+		-> SUBIR CODIGO A REPOSITORIO REMOTO
+			git push -u origin master
+			
+		-> DESCARGAR PROYECTO DESDE GITHUB
+			git clone https://github.com/i32calum/git-curso.git
+
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+++++++++++++++++++++++++++++++++++++++++++++                          DOCKER                                   +++++++++++++++++++++++++++++++++++++++
++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////// DOCKERFILE //////////////////////////////////////////////////////////////////////////////////////////////////////////
+# Vamos a instalar una version de node
+# FROM imagen : version 
+FROM node:14
+
+# El codigo ira a una carpeta en local
+# Creamos la carpeta con el comando RUN el cual ejecuta comandos LINUX
+# Nos movemos a la carpeta creada con WORKDIR
+RUN mkdir -p /usr/src/app-docker-node-mongo
+
+WORKDIR /usr/src/app-docker-node-mongo
+
+# Copiamos los paquetes de configuración con las dependencias para 
+# descargarlas en el directorio actual "./"
+COPY package*.json ./
+
+# Descargamos las dependecias en el contenedor actual
+RUN npm install
+
+# Copiamos el codigo en el directorio actual, copia el directorio 
+# actual en el contenedor actual
+COPY . .
+
+# Vamos a abrir el puerto
+EXPOSE 3000
+
+# Arranca el servidor
+CMD ["npm", "start"]
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////// DOCKERFILE //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		-> COMPILAR DOCKERFILE
+			docker build -t hellonode .
+		
+		-> VER IMAGENES
+			docker images
+			
+		-> EJECUTAR IMAGEN
+			docker run -p 4000:3000 hellonode
+			
+/////////////////////////////////////////////////////////////////////////////////////////////////////// DOCKERCOMPOSE //////////////////////////////////////////////////////////////////////////////////////////////////////////
+# Especificamos la version del compose
+
+version: "3"
+
+#Especificamos los contenedores que vamos a crear
+# web: nombre del contenedor
+# container_name: nombre de la aplicacion
+# restart: en caso de error que hacer, en este caso, reiniciar siempre
+# build: donde se encuentra el dockerfile a construit
+# port: puertos
+# - "puerto al que acceder al contenedor:puerto que expone el contenedor"
+# links:
+# - imagen a enlazar
+services:
+	web:
+		container_name: exampleapp
+		restart: always
+		build: .
+		ports:
+		- "5000:3000"
+		links:
+		- mongodb
+		
+#Especificamos los contenedores que vamos a crear
+# mongodb: nombre del contenedor
+# container_name: nmymongobd
+# image: imagen a obtener, en caso de no tenerla se descarga
+# port: puertos
+# - "puerto al que acceder al contenedor:puerto que expone el contenedor"
+#
+	mongodb:
+		container_name: mymongobd
+		image: mongo
+		ports:
+		- "27018:27017"
+/////////////////////////////////////////////////////////////////////////////////////////////////////// DOCKERCOMPOSE //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+		-> COMPILAR DOCKER COMPOSE
+			docker-compose build
+			
+		-> ARRANCAR EL DOCKER COMPOSE
+			docker-compose up
+			
+		-> VER CONTENEDORES LEVANTADOS
+			docker ps
+			
+		-> ACCEDER A UN CONTENEDOR
+			docker exec -it exampleapp bash
+			
+		-> PARAR IMAGEN
+			docker-compose stop
